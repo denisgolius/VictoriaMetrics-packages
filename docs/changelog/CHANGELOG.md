@@ -19,6 +19,7 @@ See also [LTS releases](https://docs.victoriametrics.com/lts-releases/).
 ## tip
 
 * FEATURE: [vmsingle](https://docs.victoriametrics.com/single-server-victoriametrics/), `vminsert` in [VictoriaMetrics cluster](https://docs.victoriametrics.com/cluster-victoriametrics/) and [vmagent](https://docs.victoriametrics.com/vmagent/): log metric names for signals with unsupported delta temporality on ingestion via [OpenTelemetry protocol for metrics](https://docs.victoriametrics.com/#sending-data-via-opentelemetry). Thanks to @chenlujjj for [the pull request](https://github.com/VictoriaMetrics/VictoriaMetrics/pull/8018).
+* FEATURE: [vmselect](https://docs.victoriametrics.com/cluster-victoriametrics/): support overriding vmstorage `maxUniqueTimeseries` with specific resource limits: `-search.maxLabelsAPISeries`, `-search. maxSeries`, `-search.maxTSDBStatusSeries` and `-search.maxDeleteSeries`. See [this issue](https://github.com/VictoriaMetrics/VictoriaMetrics/issues/7857).
 
 ## [v1.109.0](https://github.com/VictoriaMetrics/VictoriaMetrics/releases/tag/v1.109.0)
 

@@ -124,11 +124,22 @@ victoria-metrics-package-deb-arm: victoria-metrics-linux-arm-prod
 victoria-metrics-package-deb-arm64: victoria-metrics-linux-arm64-prod
 	./package/package_deb.sh arm64
 
+### Packaging as DEB - riscv64
+victoria-metrics-package-deb-riscv64: victoria-metrics-linux-riscv64-prod
+	./package/package_deb.sh riscv64
+	
+### Packaging as DEB - risci386v64
+victoria-metrics-package-deb-i386: victoria-metrics-linux-i386-prod
+	./package/package_deb.sh i386
+
 ### Packaging as DEB - all
 victoria-metrics-package-deb: \
         victoria-metrics-package-deb-amd64 \
         victoria-metrics-package-deb-arm \
-        victoria-metrics-package-deb-arm64
+        victoria-metrics-package-deb-arm64 \
+        victoria-metrics-package-deb-riscv64 \
+		victoria-metrics-package-deb-i386
+
 
 ### Packaging as RPM - amd64
 victoria-metrics-package-rpm-amd64: victoria-metrics-linux-amd64-prod

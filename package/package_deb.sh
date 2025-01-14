@@ -6,6 +6,15 @@ then
     ARCH="$1"
 fi
 
+# AUTHOR="Denys Holius"
+# if [[ $# -ge 2 ]]
+# then
+#     AUTHOR="$2"
+# else
+#     AUTHOR=`git config --list | grep "user.name" | awk -F "=" '{print $2}' || cat ../.git/config | grep "name"  | awk -F "=" '{print $2}' | cut -c 2-`
+#     `sed -i -e 's/Maintainer\:\ Denys\ Holius/Maintainer\:\ ${AUTHOR}/g' ${PACKDIR}/deb/control`
+# fi
+
 # Map to Debian architecture
 if [[ "$ARCH" == "amd64" ]]; then
     DEB_ARCH=amd64
@@ -16,6 +25,12 @@ elif [[ "$ARCH" == "arm64" ]]; then
 elif [[ "$ARCH" == "arm" ]]; then
     DEB_ARCH=armhf
     EXENAME_SRC="victoria-metrics-linux-arm-prod"
+elif [[ "$ARCH" == "riscv64" ]]; then
+    DEB_ARCH=riscv64
+    EXENAME_SRC="victoria-metrics-linux-riscv64-prod"
+elif [[ "$ARCH" == "i386" ]]; then
+    DEB_ARCH=i386
+    EXENAME_SRC="victoria-metrics-linux-i386-prod"
 else
     echo "*** Unknown arch $ARCH"
     exit 1
@@ -27,7 +42,8 @@ EXENAME_DST="victoria-metrics-prod"
 
 # Pull in version info
 
-VERSION=`cat ${PACKDIR}/VAR_VERSION | perl -ne 'chomp and print'`
+#VERSION=`cat ${PACKDIR}/VAR_VERSION | perl -ne 'chomp and print'`
+VERSION=`git describe --tags --abbrev=0 | sed 's/v//g'`
 BUILD=`cat ${PACKDIR}/VAR_BUILD | perl -ne 'chomp and print'`
 
 # Create directories

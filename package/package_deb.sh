@@ -28,9 +28,15 @@ elif [[ "$ARCH" == "arm" ]]; then
 elif [[ "$ARCH" == "riscv64" ]]; then
     DEB_ARCH=riscv64
     EXENAME_SRC="victoria-metrics-linux-riscv64-prod"
-elif [[ "$ARCH" == "i386" ]]; then
-    DEB_ARCH=i386
-    EXENAME_SRC="victoria-metrics-linux-i386-prod"
+elif [[ "$ARCH" == "386" ]]; then
+    DEB_ARCH=386
+    EXENAME_SRC="victoria-metrics-linux-386-prod"
+elif [[ "$ARCH" == "ppc64le" ]]; then
+    DEB_ARCH=ppc64le
+    EXENAME_SRC="victoria-metrics-linux-ppc64le-prod"
+elif [[ "$ARCH" == "loong64" ]]; then
+    DEB_ARCH=loong64
+    EXENAME_SRC="victoria-metrics-linux-loong64-prod"
 else
     echo "*** Unknown arch $ARCH"
     exit 1

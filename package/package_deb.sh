@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Install the following packages on your system if you want to build the deb package for the riscv64 architectures 
 # sudo apt install g++-riscv64-linux-gnu gcc-riscv64-linux-gnu build-essential -y 
 
 ARCH="amd64"

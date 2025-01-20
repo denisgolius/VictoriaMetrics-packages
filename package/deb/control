@@ -1,5 +1,5 @@
 Package: victoria-metrics
-Maintainer: Denys Holius
+Maintainer: ${AUTHOR}
 Depends: libc6 (>= 2.7-1)
 Section: net
 Priority: optional

@@ -1,50 +1,60 @@
 #!/bin/bash
 
+# sudo apt install g++-riscv64-linux-gnu gcc-riscv64-linux-gnu build-essential -y 
+
 ARCH="amd64"
 if [[ $# -ge 1 ]]
 then
     ARCH="$1"
 fi
 
-# AUTHOR="Denys Holius"
-# if [[ $# -ge 2 ]]
-# then
-#     AUTHOR="$2"
-# else
-#     AUTHOR=`git config --list | grep "user.name" | awk -F "=" '{print $2}' || cat ../.git/config | grep "name"  | awk -F "=" '{print $2}' | cut -c 2-`
-#     `sed -i -e 's/Maintainer\:\ Denys\ Holius/Maintainer\:\ ${AUTHOR}/g' ${PACKDIR}/deb/control`
-# fi
+AUTHOR="Denys Holius"
+if [[ $# -ge 2 ]]
+then
+    AUTHOR="$2"
+else
+    AUTHOR=`git config --list | grep "user.name" | awk -F "=" '{print $2}' || cat ../.git/config | grep "name"  | awk -F "=" '{print $2}' | cut -c 2-`
+    `sed -i -e 's/Maintainer\:\ Denys\ Holius/Maintainer\:\ ${AUTHOR}/g' package/deb/control`
+fi
 
 # Map to Debian architecture
 if [[ "$ARCH" == "amd64" ]]; then
     DEB_ARCH=amd64
-	EXENAME_SRC="victoria-metrics-linux-amd64-prod"
+	EXENAME_SRC="victoria-metrics-linux-amd64"
 elif [[ "$ARCH" == "arm64" ]]; then
     DEB_ARCH=arm64
-    EXENAME_SRC="victoria-metrics-linux-arm64-prod"
+    EXENAME_SRC="victoria-metrics-linux-arm64"
 elif [[ "$ARCH" == "arm" ]]; then
     DEB_ARCH=armhf
-    EXENAME_SRC="victoria-metrics-linux-arm-prod"
+    EXENAME_SRC="victoria-metrics-linux-arm"
 elif [[ "$ARCH" == "riscv64" ]]; then
     DEB_ARCH=riscv64
-    EXENAME_SRC="victoria-metrics-linux-riscv64-prod"
+    EXENAME_SRC="victoria-metrics-linux-riscv64"
 elif [[ "$ARCH" == "386" ]]; then
     DEB_ARCH=386
-    EXENAME_SRC="victoria-metrics-linux-386-prod"
+    EXENAME_SRC="victoria-metrics-linux-386"
 elif [[ "$ARCH" == "ppc64le" ]]; then
     DEB_ARCH=ppc64le
-    EXENAME_SRC="victoria-metrics-linux-ppc64le-prod"
+    EXENAME_SRC="victoria-metrics-linux-ppc64le"
+elif [[ "$ARCH" == "s390x" ]]; then
+    DEB_ARCH=s390x
+    EXENAME_SRC="victoria-metrics-linux-s390x"
 elif [[ "$ARCH" == "loong64" ]]; then
     DEB_ARCH=loong64
-    EXENAME_SRC="victoria-metrics-linux-loong64-prod"
+    EXENAME_SRC="victoria-metrics-linux-loong64"
 else
     echo "*** Unknown arch $ARCH"
     exit 1
 fi
 
+
+# for ARCH in "${ARCHS[@]}" ; do
+#     DEB_ARCH="${ARCH}"
+# 	EXENAME_SRC="victoria-metrics-linux-${ARCH}"
+
 PACKDIR="./package"
 TEMPDIR="${PACKDIR}/temp-deb-${DEB_ARCH}"
-EXENAME_DST="victoria-metrics-prod"
+EXENAME_DST="victoria-metrics"
 
 # Pull in version info
 

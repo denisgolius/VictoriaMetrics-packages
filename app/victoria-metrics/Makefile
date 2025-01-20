@@ -76,11 +76,14 @@ run-victoria-metrics:
 victoria-metrics-linux-amd64:
 	APP_NAME=victoria-metrics CGO_ENABLED=1 GOOS=linux GOARCH=amd64 $(MAKE) app-local-goos-goarch
 
+victoria-metrics-linux-arm64:
+	APP_NAME=victoria-metrics CGO_ENABLED=0 GOOS=linux GOARCH=arm64 $(MAKE) app-local-goos-goarch
+
 victoria-metrics-linux-arm:
 	APP_NAME=victoria-metrics CGO_ENABLED=0 GOOS=linux GOARCH=arm $(MAKE) app-local-goos-goarch
 
-victoria-metrics-linux-arm64:
-	APP_NAME=victoria-metrics CGO_ENABLED=0 GOOS=linux GOARCH=arm64 $(MAKE) app-local-goos-goarch
+victoria-metrics-linux-riscv64-prod:
+	APP_NAME=victoria-metrics CGO_ENABLED=0 GOOS=linux GOARCH=riscv64 $(MAKE) app-local-goos-goarch
 
 victoria-metrics-linux-ppc64le:
 	APP_NAME=victoria-metrics CGO_ENABLED=0 GOOS=linux GOARCH=ppc64le $(MAKE) app-local-goos-goarch
@@ -124,11 +127,22 @@ victoria-metrics-package-deb-arm64: victoria-metrics-linux-arm64-prod
 victoria-metrics-package-deb-arm: victoria-metrics-linux-arm-prod
 	./package/package_deb.sh arm
 
-
 ### Packaging as DEB - riscv64
 victoria-metrics-package-deb-riscv64: victoria-metrics-linux-riscv64-prod
 	./package/package_deb.sh riscv64
-	
+
+### Packaging as DEB - ppc64le
+victoria-metrics-package-deb-ppc64le: victoria-metrics-linux-ppc64le-prod
+	./package/package_deb.sh ppc64le
+
+### Packaging as DEB - s390x
+victoria-metrics-package-deb-s390x: victoria-metrics-linux-s390x-prod
+	./package/package_deb.sh s390x
+
+### Packaging as DEB - loong64
+victoria-metrics-package-deb-loong64: victoria-metrics-linux-loong64-prod
+	./package/package_deb.sh loong64
+
 ### Packaging as DEB - i386
 victoria-metrics-package-deb-386: victoria-metrics-linux-386-prod
 	./package/package_deb.sh 386
@@ -136,10 +150,13 @@ victoria-metrics-package-deb-386: victoria-metrics-linux-386-prod
 ### Packaging as DEB - all
 victoria-metrics-package-deb: \
         victoria-metrics-package-deb-amd64 \
-        victoria-metrics-package-deb-arm \
         victoria-metrics-package-deb-arm64 \
+        victoria-metrics-package-deb-arm \
         victoria-metrics-package-deb-riscv64 \
-		victoria-metrics-package-deb-i386
+		victoria-metrics-package-deb-ppc64le \
+		victoria-metrics-package-deb-s390x \
+		victoria-metrics-package-deb-loong64 \
+		victoria-metrics-package-deb-386
 
 ### Packaging as RPM - amd64
 victoria-metrics-package-rpm-amd64: victoria-metrics-linux-amd64-prod

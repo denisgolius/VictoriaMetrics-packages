@@ -1,5 +1,26 @@
 #!/bin/sh
 set -e
 
+# case "$1" in
+#   configure)
+#     # Add prometheus user
+#     adduser --quiet --system --home /var/lib/prometheus --no-create-home \
+#             --group --gecos "Prometheus daemon" prometheus
+
+#     if ! dpkg-statoverride --list /var/lib/prometheus/metrics2 >/dev/null ; then
+#         chown prometheus:prometheus /var/lib/prometheus/metrics2
+#     fi
+#   ;;
+    
+#   abort-upgrade|abort-remove|abort-deconfigure)
+#     :
+#   ;;
+    
+#   *)
+#     echo "postinst called with unknown argument '$1'" >&2
+#     exit 1
+#   ;;
+# esac
+
 # Reload systemd unit
 systemctl daemon-reload

@@ -15,14 +15,20 @@ victoria-metrics-pure-prod:
 victoria-metrics-linux-amd64-prod:
 	APP_NAME=victoria-metrics $(MAKE) app-via-docker-linux-amd64
 
-victoria-metrics-linux-arm-prod:
-	APP_NAME=victoria-metrics $(MAKE) app-via-docker-linux-arm
-
 victoria-metrics-linux-arm64-prod:
 	APP_NAME=victoria-metrics $(MAKE) app-via-docker-linux-arm64
 
+victoria-metrics-linux-arm-prod:
+	APP_NAME=victoria-metrics $(MAKE) app-via-docker-linux-arm
+
+victoria-metrics-linux-riscv64-prod:
+	APP_NAME=victoria-metrics $(MAKE) app-via-docker-linux-riscv64
+
 victoria-metrics-linux-ppc64le-prod:
 	APP_NAME=victoria-metrics $(MAKE) app-via-docker-linux-ppc64le
+
+victoria-metrics-linux-s390x-prod:
+	APP_NAME=victoria-metrics $(MAKE) app-via-docker-linux-s390x
 
 victoria-metrics-linux-386-prod:
 	APP_NAME=victoria-metrics $(MAKE) app-via-docker-linux-386
@@ -51,14 +57,20 @@ package-victoria-metrics-pure:
 package-victoria-metrics-amd64:
 	APP_NAME=victoria-metrics $(MAKE) package-via-docker-amd64
 
-package-victoria-metrics-arm:
-	APP_NAME=victoria-metrics $(MAKE) package-via-docker-arm
-
 package-victoria-metrics-arm64:
 	APP_NAME=victoria-metrics $(MAKE) package-via-docker-arm64
 
+package-victoria-metrics-arm:
+	APP_NAME=victoria-metrics $(MAKE) package-via-docker-arm
+
+package-victoria-metrics-riscv64:
+	APP_NAME=victoria-metrics $(MAKE) package-via-docker-riscv64
+
 package-victoria-metrics-ppc64le:
 	APP_NAME=victoria-metrics $(MAKE) package-via-docker-ppc64le
+
+package-victoria-metrics-s390x:
+	APP_NAME=victoria-metrics $(MAKE) package-via-docker-s390x
 
 package-victoria-metrics-386:
 	APP_NAME=victoria-metrics $(MAKE) package-via-docker-386
@@ -82,7 +94,7 @@ victoria-metrics-linux-arm64:
 victoria-metrics-linux-arm:
 	APP_NAME=victoria-metrics CGO_ENABLED=0 GOOS=linux GOARCH=arm $(MAKE) app-local-goos-goarch
 
-victoria-metrics-linux-riscv64-prod:
+victoria-metrics-linux-riscv64:
 	APP_NAME=victoria-metrics CGO_ENABLED=0 GOOS=linux GOARCH=riscv64 $(MAKE) app-local-goos-goarch
 
 victoria-metrics-linux-ppc64le:
@@ -115,6 +127,17 @@ victoria-metrics-windows-amd64:
 victoria-metrics-pure:
 	APP_NAME=victoria-metrics $(MAKE) app-local-pure
 
+### Packaging as DEB - all
+victoria-metrics-package-deb: \
+	victoria-metrics-package-deb-amd64 \
+	victoria-metrics-package-deb-arm64 \
+	victoria-metrics-package-deb-arm \
+	victoria-metrics-package-deb-riscv64 \
+	victoria-metrics-package-deb-ppc64le \
+	victoria-metrics-package-deb-s390x \
+	victoria-metrics-package-deb-loong64 \
+	victoria-metrics-package-deb-386
+
 ### Packaging as DEB - amd64
 victoria-metrics-package-deb-amd64: victoria-metrics-linux-amd64-prod
 	./package/package_deb.sh amd64
@@ -136,55 +159,44 @@ victoria-metrics-package-deb-ppc64le: victoria-metrics-linux-ppc64le-prod
 	./package/package_deb.sh ppc64le
 
 ### Packaging as DEB - s390x
-victoria-metrics-package-deb-s390x: victoria-metrics-linux-s390x-prod
+victoria-metrics-package-deb-s390x: victoria-metrics-linux-s390x-prod 
 	./package/package_deb.sh s390x
 
 ### Packaging as DEB - loong64
-victoria-metrics-package-deb-loong64: victoria-metrics-linux-loong64-prod
+victoria-metrics-package-deb-loong64: victoria-metrics-linux-loong64-prod 
 	./package/package_deb.sh loong64
 
 ### Packaging as DEB - i386
 victoria-metrics-package-deb-386: victoria-metrics-linux-386-prod
 	./package/package_deb.sh 386
 
-### Packaging as DEB - all
-victoria-metrics-package-deb: \
-        victoria-metrics-package-deb-amd64 \
-        victoria-metrics-package-deb-arm64 \
-        victoria-metrics-package-deb-arm \
-        victoria-metrics-package-deb-riscv64 \
-		victoria-metrics-package-deb-ppc64le \
-		victoria-metrics-package-deb-s390x \
-		victoria-metrics-package-deb-loong64 \
-		victoria-metrics-package-deb-386
+# ### Packaging as RPM - amd64
+# victoria-metrics-package-rpm-amd64: victoria-metrics-linux-amd64-prod
+# 	./package/package_rpm.sh amd64
 
-### Packaging as RPM - amd64
-victoria-metrics-package-rpm-amd64: victoria-metrics-linux-amd64-prod
-	./package/package_rpm.sh amd64
-
-### Packaging as RPM - arm64
-victoria-metrics-package-rpm-arm64: victoria-metrics-linux-arm64-prod
-	./package/package_rpm.sh arm64
+# ### Packaging as RPM - arm64
+# victoria-metrics-package-rpm-arm64: victoria-metrics-linux-arm64-prod
+# 	./package/package_rpm.sh arm64
 
 
-### Packaging as RPM - arm
-victoria-metrics-package-rpm-arm: victoria-metrics-linux-arm-prod
-	./package/package_rpm.sh arm
+# ### Packaging as RPM - arm
+# victoria-metrics-package-rpm-arm: victoria-metrics-linux-arm-prod
+# 	./package/package_rpm.sh arm
 
-### Packaging as RPM - riscv64
-victoria-metrics-package-rpm-riscv64: victoria-metrics-linux-riscv64-prod
-	./package/package_rpm.sh riscv64
+# ### Packaging as RPM - riscv64
+# victoria-metrics-package-rpm-riscv64: victoria-metrics-linux-riscv64-prod
+# 	./package/package_rpm.sh riscv64
 
-### Packaging as RPM - i386
-victoria-metrics-package-rpm-386: victoria-metrics-linux-386-prod
-	./package/package_rpm.sh 386
+# ### Packaging as RPM - i386
+# victoria-metrics-package-rpm-386: victoria-metrics-linux-386-prod
+# 	./package/package_rpm.sh 386
 
 ### Packaging as RPM - all
 victoria-metrics-package-rpm: \
-        victoria-metrics-package-rpm-amd64 \
-        victoria-metrics-package-rpm-arm64
+	victoria-metrics-package-rpm-amd64 \
+	victoria-metrics-package-rpm-arm64
 
 ### Packaging as both DEB and RPM - all
 victoria-metrics-package-deb-rpm: \
-        victoria-metrics-package-deb \
-        victoria-metrics-package-rpm
+	victoria-metrics-package-deb \
+	victoria-metrics-package-rpm

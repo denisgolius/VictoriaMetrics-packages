@@ -80,9 +80,11 @@ publish-via-docker:
 		app-via-docker-linux-arm \
 		app-via-docker-linux-arm64 \
 		app-via-docker-linux-ppc64le \
+		app-via-docker-linux-riscv64 \
+		app-via-docker-linux-s390x \
 		app-via-docker-linux-386
 	$(DOCKER) buildx build \
-		--platform=linux/amd64,linux/arm,linux/arm64,linux/ppc64le,linux/386 \
+		--platform=linux/amd64,linux/arm,linux/arm64,linux/ppc64le,linux/386,linux/s390x,linux/riscv64 \
 		--build-arg certs_image=$(CERTS_IMAGE) \
 		--build-arg root_image=$(ROOT_IMAGE) \
 		--build-arg APP_NAME=$(APP_NAME) \
@@ -147,12 +149,23 @@ app-via-docker-linux-arm64:
 	EXTRA_DOCKER_ENVS='CC=/opt/cross-builder/aarch64-linux-musl-cross/bin/aarch64-linux-musl-gcc' \
 	CGO_ENABLED=1 GOOS=linux GOARCH=arm64 $(MAKE) app-via-docker-goos-goarch
 
+app-via-docker-linux-riscv64:
+	EXTRA_DOCKER_ENVS='CC=/opt/cross-builder/riscv64-linux-musl-cross/bin/riscv64-linux-musl-gcc' \
+	CGO_ENABLED=1 GOOS=linux GOARCH=riscv64 $(MAKE) app-via-docker-goos-goarch
+
+app-via-docker-linux-s390x:
+	EXTRA_DOCKER_ENVS='CC=/opt/cross-builder/s390x-linux-musl-cross/bin/s390x-linux-musl-gcc' \
+	CGO_ENABLED=1 GOOS=linux GOARCH=s390x $(MAKE) app-via-docker-goos-goarch
+
 app-via-docker-linux-arm:
 	EXTRA_DOCKER_ENVS='GOARM=5' \
 	CGO_ENABLED=0 GOOS=linux GOARCH=arm $(MAKE) app-via-docker-goos-goarch
 
 app-via-docker-linux-ppc64le:
 	CGO_ENABLED=0 GOOS=linux GOARCH=ppc64le $(MAKE) app-via-docker-goos-goarch
+
+app-via-docker-linux-loong64:
+	CGO_ENABLED=0 GOOS=linux GOARCH=loong64 $(MAKE) app-via-docker-goos-goarch
 
 app-via-docker-linux-386:
 	CGO_ENABLED=0 GOOS=linux GOARCH=386 $(MAKE) app-via-docker-goos-goarch

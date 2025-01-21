@@ -1,5 +1,5 @@
 Package: victoria-metrics
-Maintainer: ${AUTHOR}
+Maintainer: VictoriaMetrics Team <info@victoriametrics.com>
 Depends: libc6 (>= 2.7-1)
 Section: net
 Priority: optional

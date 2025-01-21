@@ -4,7 +4,7 @@ STOPSIGNAL SIGINT
 RUN apk add git gcc musl-dev make wget --no-cache && \
     mkdir /opt/cross-builder && \
     cd /opt/cross-builder && \
-    for arch in aarch64 x86_64; do \
+    for arch in aarch64 s390x riscv64 x86_64; do \
         wget \
             https://musl.cc/${arch}-linux-musl-cross.tgz \
             -O /opt/cross-builder/${arch}-musl.tgz \

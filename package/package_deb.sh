@@ -15,7 +15,7 @@ then
     AUTHOR="$2"
 else
     AUTHOR=`git config --list | grep "user.name" | awk -F "=" '{print $2}' || cat ../.git/config | grep "name"  | awk -F "=" '{print $2}' | cut -c 2-`
-    `sed -i -e 's/Maintainer\:\ Denys\ Holius/Maintainer\:\ $AUTHOR/g' package/deb/control`
+    `sed -i -e 's/Maintainer\:.*/Maintainer\:\ $AUTHOR/g' package/deb/control`
 fi
 
 ARCHS=("amd64" "arm64" "arm" "riscv64" "386" "ppc64le" "s390x" "loong64")
